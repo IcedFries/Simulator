@@ -48,11 +48,17 @@ public class SimulatorCommandHandler extends AbstractHandler {
 		}
 		return null;
 	}
-	
+	/**
+	 * compute whether there are enough tokens on
+		each input place of a transition; Note that
+		there could be more than one arc between the
+	 	same place and the same transition (
+	 * @param transition
+	 * @return
+	 */
 	static private boolean isEnabled(Transition transition) {
 		
-		for (Arc arc: transition.getIn()) {
-			
+		for (Arc arc: transition.getIn()) {			
 			Node node = arc.getSource();
 			if (node instanceof Place) {
 				Place place = (Place) node;
@@ -61,19 +67,19 @@ public class SimulatorCommandHandler extends AbstractHandler {
 				}
 			}
 		}
-		
-		// TODO compute whether there are enough tokens on
-		//      each input place of a transition; Note that
-		//      there could be more than one arc between the
-		//      same place and the same transition (
-
 		return true;
 	}
 
+	/**
+	 * code which fires a transition, i.e.
+		removes one token for each incoming arc from
+		the target place and adds one token to the
+		target place of each outgoing arc.
+	 * @param transition
+	 */
 	static private void fire(Transition transition) {
 		
-		for (Arc arc: transition.getIn()) {
-			
+		for (Arc arc: transition.getIn()) {			
 			Node node = arc.getSource();
 			if (node instanceof Place) {
 				Place place = (Place) node;
@@ -81,33 +87,14 @@ public class SimulatorCommandHandler extends AbstractHandler {
 					place.getTokens().remove(0);
 				}
 			}
-		}
-		
-			for (Arc arc: transition.getOut()) {
-			
+		}		
+			for (Arc arc: transition.getOut()) {			
 			Node node = arc.getTarget();
 			if (node instanceof Place) {
 				Token token = PetrinetFactory.eINSTANCE.createToken();
 				Place place = (Place) node;
 				place.getTokens().add(token);
 			}
-		}
-			
-		// TODO create code which fires a transition, i.e.
-		//      removes one token for each incoming arc from
-		//      the target place and adds one token to the
-		//      target place of each outgoing arc.
-		
-		// Note: don't use new Token() or new TokenIml() for
-		//       creating a now token object use the factory
-		//       that was generated from the model. This could
-		//      look like:
-        //
-		// Token token = PetrinetFactory.eINSTANCE.createToken();
-		
+		}		
 	}
-	
-
-
-
 }
