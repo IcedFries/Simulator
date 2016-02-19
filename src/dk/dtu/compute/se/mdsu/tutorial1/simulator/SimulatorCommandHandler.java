@@ -6,6 +6,8 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.IEvaluationContext;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 
 import petrinet.Arc;
 import petrinet.Node;
@@ -79,22 +81,38 @@ public class SimulatorCommandHandler extends AbstractHandler {
 	 */
 	static private void fire(Transition transition) {
 		
-		for (Arc arc: transition.getIn()) {			
-			Node node = arc.getSource();
-			if (node instanceof Place) {
-				Place place = (Place) node;
-				if (!place.getTokens().isEmpty()) {
-					place.getTokens().remove(0);
-				}
-			}
-		}		
-			for (Arc arc: transition.getOut()) {			
-			Node node = arc.getTarget();
-			if (node instanceof Place) {
-				Token token = PetrinetFactory.eINSTANCE.createToken();
-				Place place = (Place) node;
-				place.getTokens().add(token);
-			}
-		}		
+		/**
+		 * Instead of changing the tokens programmatically now, 
+		 * in the command handler from Assignment 1,
+		 *  you can create a FireTransitionCommand 
+		 *  and execute it in the respective editing domain by a piece of code,
+		 *   that looks as follows:
+  			EditingDomain domain = AdapterFactoryEditingDomain.getEditingDomainFor(transition);
+  			if (domain != null)
+    		domain.getCommandStack().execute( new FireTransitionCommand(domain, transition));
+		 */
+		
+		  EditingDomain domain = AdapterFactoryEditingDomain.getEditingDomainFor(transition);
+		  if (domain != null)
+		    domain.getCommandStack().execute( new FireTransitionCommand(domain, transition));
+		
+		  //Nedenstående kode er flyttet til FireTransitionCommand nu
+//		for (Arc arc: transition.getIn()) {			
+//			Node node = arc.getSource();
+//			if (node instanceof Place) {
+//				Place place = (Place) node;
+//				if (!place.getTokens().isEmpty()) {
+//					place.getTokens().remove(0);
+//				}
+//			}
+//		}		
+//			for (Arc arc: transition.getOut()) {			
+//			Node node = arc.getTarget();
+//			if (node instanceof Place) {
+//				Token token = PetrinetFactory.eINSTANCE.createToken();
+//				Place place = (Place) node;
+//				place.getTokens().add(token);
+//			}
+//		}		
 	}
 }
