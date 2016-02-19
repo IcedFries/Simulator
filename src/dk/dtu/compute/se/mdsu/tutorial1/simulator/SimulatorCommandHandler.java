@@ -85,12 +85,11 @@ public class SimulatorCommandHandler extends AbstractHandler {
 		
 			for (Arc arc: transition.getOut()) {
 			
-			Node node = arc.getSource();
+			Node node = arc.getTarget();
 			if (node instanceof Place) {
+				Token token = PetrinetFactory.eINSTANCE.createToken();
 				Place place = (Place) node;
-				if (!place.getTokens().isEmpty()) {
-					place.getTokens().remove(0);
-				}
+				place.getTokens().add(token);
 			}
 		}
 			
