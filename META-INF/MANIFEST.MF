@@ -9,5 +9,6 @@ Require-Bundle: Petrinet;bundle-version="0.1.0",
  org.eclipse.core.commands,
  Petrinet.edit;bundle-version="1.0.0",
  Petrinet.editor;bundle-version="1.0.0",
- Petrinet.tests;bundle-version="1.0.0"
+ Petrinet.tests;bundle-version="1.0.0",
+ org.eclipse.emf.edit
 Import-Package: petrinet
