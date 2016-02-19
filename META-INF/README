@@ -1,0 +1,6 @@
+Note: You need to replace the dependency to the plugin in project
+
+        dk.dtu.compute.se.mdsu.tutorial1;bundle-version="0.1.0"
+
+      in the MANIFEST file by a dependency to your project where
+      you generated the model code from your Petri net mode.

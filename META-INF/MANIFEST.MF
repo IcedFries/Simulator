@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Simulator
+Bundle-SymbolicName: dk.dtu.compute.se.mdsu.tutorial1.simulator;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: Petrinet;bundle-version="0.1.0",
+ org.eclipse.core.expressions,
+ org.eclipse.core.commands,
+ Petrinet.edit;bundle-version="1.0.0",
+ Petrinet.editor;bundle-version="1.0.0",
+ Petrinet.tests;bundle-version="1.0.0"
+Import-Package: petrinet
