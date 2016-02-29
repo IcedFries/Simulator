@@ -10,5 +10,6 @@ Require-Bundle: Petrinet;bundle-version="0.1.0",
  Petrinet.edit;bundle-version="1.0.0",
  Petrinet.editor;bundle-version="1.0.0",
  Petrinet.tests;bundle-version="1.0.0",
- org.eclipse.emf.edit
+ org.eclipse.emf.edit,
+ org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.8.0"
 Import-Package: petrinet
