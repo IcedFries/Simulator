@@ -32,7 +32,7 @@ public class FireTransitionCommand extends org.eclipse.emf.common.command.Compou
 				Place place = (Place) node;
 				if (!place.getTokens().isEmpty()) {
 					Token token = place.getTokens().get(0);
-					place.getTokens().remove(0);
+					// place.getTokens().remove(0);
 					//add a RemoveCommand for each token that needs to be removed from a place;
 					//you do that by the help of this.append(),
 					RemoveCommand rmCmd = new RemoveCommand(domain,
@@ -48,7 +48,7 @@ public class FireTransitionCommand extends org.eclipse.emf.common.command.Compou
 			if (node instanceof Place) {
 				Token token = PetrinetFactory.eINSTANCE.createToken();
 				Place place = (Place) node;
-				place.getTokens().add(token);
+				// place.getTokens().add(token);
 				/**
 				 * Moreover, add a CreateChildCommand for each token that needs to be added.
 				 * You should create the new token via the model's factory (see Assignment 1);

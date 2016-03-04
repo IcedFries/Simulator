@@ -1,6 +1,8 @@
 package dk.dtu.compute.se.mdsu.tutorial1.simulator;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -83,29 +85,44 @@ public class SimulatorCommandHandler extends AbstractHandler {
 	 * compute whether there are enough tokens on each input place of a
 	 * transition; Note that there could be more than one arc between the same
 	 * place and the same transition (
-	 * 
+	 *
 	 * @param transition
 	 * @return
 	 */
 	static private boolean isEnabled(Transition transition) {
+		if (transition != null) {
+			// compute the number of tokens needed for each place in the map needed;
+			// this is necessary because some places might occur twice in the preset
+			// of a transition
+			Map<Place, Integer> needed = new HashMap<Place,Integer>();
+			for (Arc arc: transition.getIn()) {
+				Node node = arc.getSource();
+				if (node instanceof Place) {
+					Place source = (Place) node;
+					if (needed.containsKey(source)) {
+						needed.put(source, needed.get(source) + 1);
+					} else {
+						needed.put(source, 1);
+					}
+				}
+			}
 
-		for (Arc arc : transition.getIn()) {
-			Node node = arc.getSource();
-			if (node instanceof Place) {
-				Place place = (Place) node;
-				if (place.getTokens().isEmpty()) {
+			// check whether each place has the number of needed tokens
+			for (Place place: needed.keySet()) {
+				if (place.getTokens().size() < needed.get(place)) {
 					return false;
 				}
 			}
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	/**
 	 * code which fires a transition, i.e. removes one token for each incoming
 	 * arc from the target place and adds one token to the target place of each
 	 * outgoing arc.
-	 * 
+	 *
 	 * @param transition
 	 */
 	static private void fire(Transition transition) {
@@ -124,7 +141,7 @@ public class SimulatorCommandHandler extends AbstractHandler {
 		if (domain != null)
 			domain.getCommandStack().execute(new FireTransitionCommand(domain, transition));
 
-		// Nedenstående kode er flyttet til FireTransitionCommand nu
+		// Nedenstï¿½ende kode er flyttet til FireTransitionCommand nu
 		// for (Arc arc: transition.getIn()) {
 		// Node node = arc.getSource();
 		// if (node instanceof Place) {
